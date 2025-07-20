@@ -1,0 +1,40 @@
+/* Keep Tailwind import */
+@import "tailwindcss";
+
+/* Custom slider styles */
+input[type="range"] {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+  background: transparent; /* Do not set solid color here */
+  outline: none;
+  position: relative;
+}
+
+/* This will be applied by JavaScript */
+input[type="range"].styled-slider {
+  background: linear-gradient(to right, #047857 50%, #d1fae5 50%);
+}
+
+/* Green circular thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: #10b981; /* emerald-500 */
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -7px; /* align with track */
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  background-color: #10b981;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
