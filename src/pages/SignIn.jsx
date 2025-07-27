@@ -1,4 +1,21 @@
+import { useState } from "react";
+ import useAuth from "../hooks/useAuth"; // ✅ Import
+
+ 
 const SignIn = () => {
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+ const handleLogin = () => {
+    login({ name: "Hifza", email: "hifza@example.com" });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // pretend user is valid
+    const userData = { name: "John", email };
+    login(userData); 
+  };
   return (
     <>
       <div className="bg-gradient-to-r from-green-100 via-emerald-50 to-teal-100 shadow-inner flex flex-col justify-center items-center p-5 border border-emerald-100">
@@ -6,6 +23,7 @@ const SignIn = () => {
       </div>
 
       <form
+      onSubmit={handleSubmit}
         action=""
         className="w-[95%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[75%] 2xl:w-[60%] mx-auto p-5 pb-1 my-8 flex flex-col justify-center bg-blue-50 border border-emerald-200 shadow-[0_2px_10px_rgba(16,185,129,0.2)] rounded-md"
       >
@@ -17,6 +35,7 @@ const SignIn = () => {
           placeholder="Enter Your Username or Email"
           required
           className="mb-1.5 mx-2 sm:mx-5 mt-0.5 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <label className="my-2 font-medium text-lg sm:text-xl px-2 text-green-900">Enter Password</label>
@@ -25,6 +44,7 @@ const SignIn = () => {
           placeholder="Password"
           required
           className="mx-2 sm:mx-5 mt-0.5 mb-2.5 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         {/* Button */}

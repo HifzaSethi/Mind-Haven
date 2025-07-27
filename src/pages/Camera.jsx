@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
-import { useNavigate } from "react-router-dom";
+import useNavigation from "../hooks/useNavigationn";
 
 const videoConstraints = {
   width: 300,
@@ -12,7 +12,7 @@ const CameraCapture = () => {
   const webcamRef = useRef(null);
   const [image, setImage] = useState(null);
   const [cameraOn, setCameraOn] = useState(true);
-  const navigate = useNavigate();
+  const { goToAssessment } = useNavigation(); // ✅ use your custom hook
 
   const stopCamera = () => {
     const video = webcamRef.current?.video;
@@ -28,12 +28,11 @@ const CameraCapture = () => {
   }, []);
 
   const handleClose = () => {
-    navigate("/Assessment");
+    goToAssessment(); // ✅ this will work if hook is correct
   };
 
   return (
     <div className="relative flex flex-col items-center gap-6 py-6 px-4 text-center">
-      {/* Close Button when image is shown */}
       {image && (
         <button
           onClick={handleClose}
@@ -41,11 +40,10 @@ const CameraCapture = () => {
           style={{ color: '#dc2626' }}
           title="Go back to Assessment"
         >
-         X
+          X
         </button>
       )}
 
-      {/* Instructional Text */}
       <div className="max-w-md">
         <h2 className="text-xl font-semibold text-emerald-800 mb-2">
           Let's capture your natural expression
@@ -57,7 +55,6 @@ const CameraCapture = () => {
         </p>
       </div>
 
-      {/* Camera and Capture Button */}
       {cameraOn && (
         <>
           <Webcam
@@ -76,7 +73,6 @@ const CameraCapture = () => {
         </>
       )}
 
-      {/* Display Captured Image */}
       {image && (
         <div className="mt-6 text-center">
           <h3 className="text-lg font-semibold mb-2">Captured Image:</h3>

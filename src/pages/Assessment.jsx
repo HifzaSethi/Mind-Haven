@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAppContext } from "../Context/AppContext";
+import useAssessment from "../hooks/useAssessment";
 
-const Assessment = ({ onCameraClick ,onResultClick}) => {
+const Assessment = () => {
   const questions = [
     "Academic Pressure",
     "Work Pressure",
@@ -10,24 +11,18 @@ const Assessment = ({ onCameraClick ,onResultClick}) => {
     "Suicidal Thoughts",
     "Financial Stress",
   ];
+ const {navigateToCamera } = useAppContext();
+const {  submitAnswers, navigateToResult } = useAssessment();
 
-  const navigate = useNavigate();
-  const [cameraTriggered, setCameraTriggered] = useState(false);
-const [ResultPage,setResultPage]=useState(false)
-  useEffect(() => {
-    if (cameraTriggered) {
-      onCameraClick();
-      navigate("/Camera");
-      window.scrollTo(0, 0);
-    }
-  }, [cameraTriggered]);
-  useEffect(() => {
-    if (ResultPage) {
-      onResultClick();
-      navigate("/Result");
-      window.scrollTo(0, 0);
-    }
-  }, [ResultPage]);
+
+  const handleSubmit = () => {
+    const userAnswers = [1, 0, 1, 1, 0]; // dummy values
+    submitAnswers(userAnswers);
+    // then navigate to Result page
+  };
+  
+
+  // Slider color effect
   useEffect(() => {
     const sliders = document.querySelectorAll(".styled-slider");
 
@@ -53,14 +48,19 @@ const [ResultPage,setResultPage]=useState(false)
     <>
       {/* Header */}
       <div className="bg-gradient-to-r from-green-100 via-emerald-50 to-teal-100 shadow-inner flex flex-col justify-center items-center p-6 border border-emerald-100">
-        <h2 className="text-3xl font-bold text-green-900 mb-2">Begin Mental Health Check</h2>
+        <h2 className="text-3xl font-bold text-green-900 mb-2">
+          Begin Mental Health Check
+        </h2>
         <p className="text-sm sm:text-base text-green-700 font-medium text-center">
           Help us understand how you're doing — your honest input leads to better care.
         </p>
       </div>
 
       {/* Form */}
-      <form className="m-6 p-6 bg-white border border-emerald-200 shadow-[0_2px_10px_rgba(16,185,129,0.1)] rounded-md space-y-6">
+      <form
+        className="m-6 p-6 bg-white border border-emerald-200 shadow-[0_2px_10px_rgba(16,185,129,0.1)] rounded-md space-y-6"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <p className="text-base text-green-900 font-medium">
           Kindly rate each item on a scale of 1 (low) to 10 (high).
         </p>
@@ -90,7 +90,9 @@ const [ResultPage,setResultPage]=useState(false)
 
         {/* Emotional Questions */}
         <div className="mt-10 bg-emerald-50 border border-emerald-100 p-5 rounded-lg shadow-sm space-y-5">
-          <h3 className="text-xl font-semibold text-emerald-800">We’re here to listen</h3>
+          <h3 className="text-xl font-semibold text-emerald-800">
+            We’re here to listen
+          </h3>
           <p className="text-sm text-green-700">
             This is a safe, judgment-free space. Feel free to share what’s on your mind.
           </p>
@@ -133,15 +135,18 @@ const [ResultPage,setResultPage]=useState(false)
         <div className="flex flex-col sm:flex-row justify-end gap-4 mt-8">
           <button
             type="button"
-            onClick={() => setCameraTriggered(true)}
+         onClick={navigateToCamera}
             className="px-5 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow"
           >
             Launch Camera
           </button>
 
           <button
-          onClick={() => setResultPage(true)}
-            type="submit"
+            type="button"
+             onClick={() => {
+    handleSubmit();      // call your custom logic
+   navigateToResult();      // then navigate
+  }}
             className="px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 rounded-lg shadow"
           >
             Submit Assessment
