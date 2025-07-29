@@ -1,5 +1,4 @@
-import { useAppContext } from "../Context/AppContext";
-
+import { useAppContext } from '../context/useAppContext';
 const useAssessment = () => {
   const {
     answers,
@@ -11,6 +10,7 @@ const useAssessment = () => {
     setShowResult,
     navigateToAssessment,
     navigateToResult,
+    navigateToCamera,
   } = useAppContext();
 
   return {
@@ -23,6 +23,7 @@ const useAssessment = () => {
     setShowResult,
     navigateToAssessment,
     navigateToResult,
+    navigateToCamera,
   };
 };
 

@@ -1,4 +1,4 @@
-import { useAppContext } from "../Context/AppContext";
+import { useAppContext } from '../context/useAppContext';
 
 const useAuth = () => {
   const { isAuthenticated, user, login, logout } = useAppContext();

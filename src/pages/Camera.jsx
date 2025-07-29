@@ -1,11 +1,11 @@
-import React, { useRef, useState, useCallback } from "react";
-import Webcam from "react-webcam";
-import useNavigation from "../hooks/useNavigationn";
+import React, { useRef, useState, useCallback } from 'react';
+import Webcam from 'react-webcam';
+import useNavigation from '../hooks/useNavigationn';
 
 const videoConstraints = {
   width: 300,
   height: 300,
-  facingMode: "user",
+  facingMode: 'user',
 };
 
 const CameraCapture = () => {
@@ -49,9 +49,10 @@ const CameraCapture = () => {
           Let's capture your natural expression
         </h2>
         <p className="text-sm text-gray-700">
-          Please look directly into the camera and keep your face within the frame. 
-          Try to stay relaxed — we want to capture your genuine expression, not a forced smile. 
-          When you're ready, click the button below.
+          Please look directly into the camera and keep your face within the
+          frame. Try to stay relaxed — we want to capture your genuine
+          expression, not a forced smile. When you're ready, click the button
+          below.
         </p>
       </div>
 

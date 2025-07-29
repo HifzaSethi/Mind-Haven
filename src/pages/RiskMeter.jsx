@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const RiskMeter = ({ level = 3 }) => {
   const segments = 10;
@@ -7,20 +7,20 @@ const RiskMeter = ({ level = 3 }) => {
 
   // Ensure level is clamped between 0 and segments
   const clampedLevel = Math.max(0, Math.min(level, segments));
-  
+
   // Calculate angle for needle (0 degrees = leftmost, 180 degrees = rightmost)
   const angle = (clampedLevel / segments) * 180;
 
   const getColor = (i) => {
-    if (i < 3) return "#22C55E"; // green
-    if (i < 7) return "#F59E0B"; // amber
-    return "#EF4444"; // red
+    if (i < 3) return '#22C55E'; // green
+    if (i < 7) return '#F59E0B'; // amber
+    return '#EF4444'; // red
   };
 
   const getRiskLabel = () => {
-    if (clampedLevel < 4) return "LOW RISK";
-    if (clampedLevel < 7) return "MEDIUM RISK";
-    return "HIGH RISK";
+    if (clampedLevel < 4) return 'LOW RISK';
+    if (clampedLevel < 7) return 'MEDIUM RISK';
+    return 'HIGH RISK';
   };
 
   return (
@@ -30,7 +30,7 @@ const RiskMeter = ({ level = 3 }) => {
           {Array.from({ length: segments }).map((_, i) => {
             const startAngle = (i * 180) / segments;
             const endAngle = ((i + 1) * 180) / segments;
-            
+
             // Convert to radians and adjust for SVG coordinate system
             const startRad = (Math.PI * startAngle) / 180;
             const endRad = (Math.PI * endAngle) / 180;
@@ -100,9 +100,9 @@ const RiskMeterDemo = () => {
     <div className="p-8 bg-gray-100 min-h-screen">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-6">Risk Meter</h1>
-        
+
         <RiskMeter level={level} />
-        
+
         <div className="mt-6">
           <label className="block text-sm font-medium mb-2">
             Risk Level: {level}
