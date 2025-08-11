@@ -1,22 +1,31 @@
-import RiskMeter from './RiskMeter';
-import useNavigation from '../hooks/useNavigationn';
-import useAssessment from '../hooks/useAssessment';
-
+import React, { lazy, Suspense } from 'react';
+import { useAppContext } from '../context/AppContext';
+import useNavigation from '../hooks/useNavigation';
+const RiskMeter = lazy(() => import('./RiskMeter'));
 const Result = () => {
   const {
     userRiskLevel,
     showResult,
     setShowResult,
     userName = 'Friend',
-  } = useAssessment();
-
+  } = useAppContext();
   const { goToGuidance, goToAssessment } = useNavigation();
-
   const handleViewResult = () => {
-    setShowResult(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    console.log('handleViewResult called, setShowResult:', setShowResult); // Debug log
+    if (typeof setShowResult === 'function') {
+      setShowResult(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      console.error('setShowResult is not a function:', setShowResult);
+    }
   };
-
+  // Debug log to check what we're getting from context
+  console.log('Context values:', {
+    userRiskLevel,
+    showResult,
+    setShowResult,
+    userName,
+  });
   return (
     <>
       {!showResult ? (
@@ -36,16 +45,23 @@ const Result = () => {
             >
               ← Go Back to Assessment
             </p>
+
             <div className="mx-4 sm:mx-auto max-w-3xl p-6 sm:p-8 my-6 sm:my-8 bg-gradient-to-br from-emerald-50 via-white to-teal-50 border border-emerald-200 shadow-lg rounded-3xl">
               <div className="text-center space-y-6">
                 <div className="relative w-full">
                   <div className="w-20 h-20 mx-auto bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg">
                     <svg
                       className="w-10 h-10 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
                     >
-                      <path fillRule="evenodd" d="..." clipRule="evenodd" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
                     </svg>
                   </div>
                   <div className="absolute -top-2 right-1/3 sm:right-1/2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
@@ -54,7 +70,11 @@ const Result = () => {
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
-                      <path d="..." />
+                      <path
+                        fillRule="evenodd"
+                        d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -81,10 +101,16 @@ const Result = () => {
                 <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <svg
                     className="w-6 h-6 text-yellow-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
                   >
-                    <path fillRule="evenodd" d="..." clipRule="evenodd" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                    />
                   </svg>
                 </div>
                 <div className="flex-1 space-y-4">
@@ -98,10 +124,16 @@ const Result = () => {
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-4 h-4 text-blue-600"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
                         >
-                          <path fillRule="evenodd" d="..." clipRule="evenodd" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+                          />
                         </svg>
                       </div>
                       <div>
@@ -118,10 +150,16 @@ const Result = () => {
                       <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-4 h-4 text-purple-600"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
                         >
-                          <path fillRule="evenodd" d="..." clipRule="evenodd" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
                         </svg>
                       </div>
                       <div>
@@ -138,10 +176,16 @@ const Result = () => {
                       <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-4 h-4 text-green-600"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
                         >
-                          <path fillRule="evenodd" d="..." clipRule="evenodd" />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                          />
                         </svg>
                       </div>
                       <div>
@@ -170,7 +214,7 @@ const Result = () => {
                 You're not defined by a result...
               </p>
               <p className="text-sm sm:text-base text-green-700 font-medium">
-                You’ve already taken a brave first step.
+                You've already taken a brave first step.
               </p>
             </div>
 
@@ -193,6 +237,7 @@ const Result = () => {
                 </p>
               </div>
             </div>
+
             {/* View Result Button */}
             <button
               onClick={handleViewResult}
@@ -233,7 +278,9 @@ const Result = () => {
             <h4 className="text-2xl font-semibold text-emerald-700 mb-4">
               Your Current Mental Health Risk Level
             </h4>
-            <RiskMeter level={userRiskLevel} />
+            <Suspense fallback={<div>Loading meter...</div>}>
+              <RiskMeter level={userRiskLevel} />
+            </Suspense>
 
             {/* Placeholder for cause */}
             <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-5">
@@ -244,10 +291,9 @@ const Result = () => {
                 (Add backend-generated cause or placeholder)
               </p>
             </div>
-
             <div className="mt-6 p-4 bg-blue-100 rounded-lg">
               <p className="text-sm text-blue-700 font-medium">
-                💡 This result reflects today’s pattern. It may change — support
+                💡 This result reflects today's pattern. It may change — support
                 is always available.
               </p>
             </div>
@@ -293,4 +339,4 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default React.memo(Result);

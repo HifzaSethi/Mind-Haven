@@ -1,36 +1,55 @@
 import './app.css';
 import { Routes, Route } from 'react-router-dom';
-import Footer from './Components/Footer';
-import ScrollToTop from './Components/ScrollToTop';
-import Header from './Components/HEader';
-import Home from './pages/Home';
-import SignIn from './Pages/SignIn';
-import SignUp from './pages/SignUp';
-import Assessment from './Pages/Assessment';
-import Result from './pages/Result';
-import CameraCapture from './pages/Camera';
-import LearnMore from './pages/LearnMore';
-import Guidance from './pages/Guidance';
-
+import { ProtectedRoute } from './context/ProtectedRoute';
+import ScrollToTop from './components/ScrollToTop';
+import MainLayout from './mainlayout';
+import React, { Suspense, lazy } from 'react';
+const Home = lazy(() => import('./pages/Home'));
+const SignIn = lazy(() => import('./pages/SignIn'));
+const SignUp = lazy(() => import('./pages/SignUp'));
+const Assessment = lazy(() => import('./pages/Assessment'));
+const Result = lazy(() => import('./pages/Result'));
+const LearnMore = lazy(() => import('./pages/LearnMore'));
+const Guidance = lazy(() => import('./pages/Guidance'));
 const App = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50">
-      <Header />
+    <div>
       <ScrollToTop />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/Assessment" element={<Assessment />} />
-        <Route path="/Camera" element={<CameraCapture />} />
-        <Route path="/Result" element={<Result />} />
-        <Route path="/LearnMore" element={<LearnMore />} />
-        <Route path="/Guidance" element={<Guidance />} />
-      </Routes>
-
-      <Footer />
+      <Suspense fallback={<div className="text-center p-8">Loading...</div>}>
+        <Routes>
+          {/* ALL ROUTES inside MainLayout */}
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} /> {/* ✅ Home at / */}
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route
+              path="assessment"
+              element={
+                <ProtectedRoute>
+                  <Assessment />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="result"
+              element={
+                <ProtectedRoute>
+                  <Result />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="learnmore" element={<LearnMore />} />
+            <Route
+              path="guidance"
+              element={
+                <ProtectedRoute>
+                  <Guidance />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </Suspense>
     </div>
   );
 };

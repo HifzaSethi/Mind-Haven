@@ -1,7 +1,9 @@
-import useNavigation from '../hooks/useNavigationn';
+import useNavigation from '../hooks/useNavigation';
+import { useAppContext } from '../context/AppContext.jsx'; // Add this import
 
 const Home = () => {
   const { goToAssessment, goToLearnMore } = useNavigation();
+  const { setLearnMoreClicked } = useAppContext(); // Add this line
 
   return (
     <>
@@ -76,7 +78,10 @@ const Home = () => {
         </button>
 
         <button
-          onClick={goToLearnMore}
+          onClick={() => {
+            setLearnMoreClicked(true);
+            goToLearnMore();
+          }}
           className="bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 
                      hover:from-emerald-700 hover:via-green-700 hover:to-teal-700 
                      shadow-xl text-white 

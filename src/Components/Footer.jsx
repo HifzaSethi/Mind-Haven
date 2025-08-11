@@ -1,3 +1,4 @@
+import React from 'react';
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-r from-green-200 via-emerald-100 to-green-200 text-emerald-800 py-4 sm:py-5 border-t border-emerald-300 shadow-inner">
@@ -18,4 +19,4 @@ const Footer = () => {
     </footer>
   );
 };
-export default Footer;
+export default React.memo(Footer);

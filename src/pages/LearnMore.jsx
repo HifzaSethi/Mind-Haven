@@ -1,4 +1,6 @@
-import { useAppContext } from '../context/useAppContext';
+import { useAppContext } from '../context/AppContext';
+import React from 'react';
+
 const LearnMore = () => {
   const { learnMoreClicked } = useAppContext();
   return (
@@ -77,4 +79,4 @@ const LearnMore = () => {
   );
 };
 
-export default LearnMore;
+export default React.memo(LearnMore);

@@ -1,8 +1,9 @@
+import React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
-import useAuth from '../hooks/useAuth'; // ✅ Import
-
+import { useAuth } from '../context/useAuth';
+import { useCallback } from 'react';
 const NavBar = () => {
   const { isAuthenticated, user, logout } = useAuth(); // ✅ Use in dropdown menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,13 +11,13 @@ const NavBar = () => {
 
   const navigate = useNavigate();
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen((prev) => !prev);
+  }, []);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleDropdown = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -187,4 +188,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default React.memo(NavBar);

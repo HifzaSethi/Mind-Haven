@@ -1,6 +1,6 @@
 import NavBar from './NavBar';
-import useAuth from '../hooks/useAuth';
-
+import { useAuth } from '../context/useAuth';
+import React from 'react';
 const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
 
@@ -81,4 +81,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

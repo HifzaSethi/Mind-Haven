@@ -1,25 +1,24 @@
-import useForm from '../hooks/useForm';
-import useAuth from '../hooks/useAuth';
+import { useFormik } from 'formik';
+import SignUpSchemas from '../schemas/signup';
+import React from 'react';
 
+const initialValues = {
+  name: '',
+  age: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  trustedEmail: '',
+};
 const SignUp = () => {
-  const { login } = useAuth();
-  const { values, handleChange, handleSubmit } = useForm(
-    {
-      name: '',
-      age: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      trustedEmail: '',
-    },
-    (formValues) => {
-      login({
-        name: formValues.name,
-        email: formValues.email,
-      });
-    }
-  );
-
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: SignUpSchemas,
+      onSubmit: (values) => {
+        console.log(values);
+      },
+    });
   return (
     <>
       <div className="bg-gradient-to-r from-green-100 via-emerald-50 to-teal-100 shadow-inner flex flex-col justify-center items-center p-5 border border-emerald-100">
@@ -38,24 +37,31 @@ const SignUp = () => {
           name="name"
           value={values.name}
           onChange={handleChange}
+          onBlur={handleBlur}
           type="text"
           placeholder="Enter Your Name"
-          required
           className="mb-1.5 mx-2 sm:mx-5 mt-0.5 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
         />
+        {errors.name && touched.name && (
+          <p className="text-sm text-red-600 font-medium mx-3">{errors.name}</p>
+        )}
 
         <label className="my-2 font-medium text-lg sm:text-xl px-2 text-green-900">
           Age
         </label>
+
         <input
           name="age"
           value={values.age}
           onChange={handleChange}
+          onBlur={handleBlur}
           type="number"
           placeholder="Enter Your Age"
-          required
           className="mx-2 sm:mx-5 mt-0.5 mb-1.5 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
         />
+        {errors.age && touched.age && (
+          <p className="text-sm text-red-600 font-medium mx-3">{errors.age}</p>
+        )}
 
         <label className="my-2 font-medium text-lg sm:text-xl px-2 text-green-900">
           Email
@@ -64,11 +70,16 @@ const SignUp = () => {
           name="email"
           value={values.email}
           onChange={handleChange}
+          onBlur={handleBlur}
           type="email"
           placeholder="Enter Your Email"
-          required
           className="mx-2 sm:mx-5 mt-0.5 mb-2.5 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
         />
+        {errors.email && touched.email && (
+          <p className="text-sm text-red-600 font-medium mx-3">
+            {errors.email}
+          </p>
+        )}
 
         <label className="my-2 font-medium text-lg sm:text-xl px-2 text-green-900">
           Set Password
@@ -77,11 +88,16 @@ const SignUp = () => {
           name="password"
           value={values.password}
           onChange={handleChange}
+          onBlur={handleBlur}
           type="password"
           placeholder="Password"
-          required
           className="mx-2 sm:mx-5 mt-0.5 mb-2.5 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
         />
+        {errors.password && touched.password && (
+          <p className="text-sm text-red-600 font-medium mx-3">
+            {errors.password}
+          </p>
+        )}
 
         <label className="my-2 font-medium text-lg sm:text-xl px-2 text-green-900">
           Confirm Password
@@ -90,11 +106,16 @@ const SignUp = () => {
           name="confirmPassword"
           value={values.confirmPassword}
           onChange={handleChange}
+          onBlur={handleBlur}
           type="password"
           placeholder="Password"
-          required
           className="mx-2 sm:mx-5 mt-0.5 mb-2.5 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
         />
+        {errors.confirmPassword && touched.confirmPassword && (
+          <p className="text-sm text-red-600 font-medium mx-3">
+            {errors.confirmPassword}
+          </p>
+        )}
 
         <label className="my-2 mt-2 font-medium text-lg sm:text-xl px-2 text-green-900">
           Enter Any Trusted Person Email
@@ -103,11 +124,16 @@ const SignUp = () => {
           name="trustedEmail"
           value={values.trustedEmail}
           onChange={handleChange}
+          onBlur={handleBlur}
           type="email"
           placeholder="Email of your guardian or trusted friend"
-          required
           className="mx-2 sm:mx-5 mt-0.5 mb-10 bg-white border border-slate-200 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-200 shadow-sm focus:shadow-md placeholder-slate-400 text-sm sm:text-base rounded-md p-3 transition duration-200"
         />
+        {errors.trustedEmail && touched.trustedEmail && (
+          <p className="text-sm text-red-600 font-medium mx-3">
+            {errors.trustedEmail}
+          </p>
+        )}
 
         <button
           type="submit"
@@ -120,4 +146,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default React.memo(SignUp);
