@@ -1,0 +1,9 @@
+flask
+flask-cors
+numpy
+requests
+pillow
+scikit-learn
+google-auth
+tensorflow==2.15.0
+gunicorn

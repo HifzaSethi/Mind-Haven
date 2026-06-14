@@ -1,0 +1,31 @@
+# Firebase Admin Credentials
+Backend/mental-health-system.json
+
+# Environment Variables
+.env
+.env.local
+.env.*
+
+# Node Modules
+node_modules/
+
+# Python Virtual Environment
+venv/
+env/
+
+# AI Models
+*.h5
+*.keras
+*.pkl
+*.joblib
+
+# Build Files
+dist/
+build/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
